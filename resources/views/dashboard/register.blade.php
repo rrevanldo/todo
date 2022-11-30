@@ -25,28 +25,24 @@
         <div class="position-relative mt-3 form-input">
             <label>Email</label>
             <input class="form-control" type="email" name="email">
-            <i class="fas fa-envelope"></i>
         </div>
         <div class="position-relative mt-3 form-input">
             <label>Nama Lengkap</label>
             <input class="form-control" type="text" name="name">
-            <i class="fas fa-id-card"></i>
         </div>
         <div class="position-relative mt-3 form-input">
             <label>Username</label>
             <input class="form-control" type="text" name="username">
-            <i class="fas fa-user"></i>
         </div>
         <div class="position-relative mt-3 form-input">
             <label>Password</label>
             <input class="form-control" type="password" name="password">
-            <i class="fas fa-lock"></i>
         </div>
         
         
         <div class=" mt-5 d-flex justify-content-between align-items-center">
-            <span><a href="/" style="text-decoration: underline;">Login</a></span>
-            <button type="submit" class="go-button"><i class="fas fa-plus"></i></button>
+            <span><a class="logres" href="/" style="text-decoration: underline;">Login</a></span>
+            <button type="submit" class="btn btn-success">Register</button>
         </div>
     </form>
 </div>

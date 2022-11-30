@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-<div class="wrapper bg-white">
+<div class="wrapper mt-5">
     @if (Session::get('notAllowed'))
         <div class="alert alert-danger">
             {{ Session::get('notAllowed') }}
@@ -10,6 +10,16 @@
     @if (Session::get('successAdd'))
         <div class="alert alert-success">
             {{ Session::get('successAdd') }}
+        </div>
+    @endif
+    @if (Session::get('succesUpdate'))
+        <div class="alert alert-success">
+            {{ Session::get('succesUpdate') }}
+        </div>
+    @endif
+    @if (Session::get('successDelete'))
+        <div class="alert alert-success">
+            {{ Session::get('successDelete') }}
         </div>
     @endif
     <div class="d-flex align-items-start justify-content-between">
@@ -32,63 +42,46 @@
             <div>
                 <span class="text-muted fas fa-comment btn"></span>
             </div>
-            <div class="text-muted">2 todos</div>
-            <button class="ml-auto btn bg-white text-muted fas fa-angle-down" type="button" data-toggle="collapse"
+            <div class="text-muted">{{!is_null($todos) ? count($todos) : '-' }} todos</div>
+            <button class="ml-auto btn text-muted fas fa-angle-down" type="button" data-toggle="collapse"
                 data-target="#comments" aria-expanded="false" aria-controls="comments"></button>
         </div>
     </div>
     <div id="comments" class="mt-1">
+        @foreach ($todos as $todo)
         <div class="comment d-flex align-items-start justify-content-between">
             <div class="mr-2">
-                <label class="option">
-                    <input type="checkbox">
+                <form action="/todo/complated/{{$todo['id']}}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="fas fa-check" style="background: #B9E0FF; padding: 8px !important;"></button>
+                </form>
+                {{-- <label class="option">
+                    <input type="checkbox"> 
                     <span class="checkmark"></span>
-                </label>
-            </div>
-            <div class="d-flex flex-column">
-                <b class="text-justify">
-                    This is the first task that has a really long name to test this.
-                </b>
-                <p class="text-muted">Completed <span class="date">Dec 16, 2019</span></p>
-            </div>
-            <div class="ml-md-4 ml-0">
-                <span class="fas fa-arrow-right btn"></span>
-            </div>
-        </div>
-        <div class="comment d-flex align-items-start justify-content-between">
-            <div class="mr-2">
-                <label class="option">
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                </label>
+                </label> --}}
             </div>
             <div class="d-flex flex-column w-75">
-                <b class="text-justify">
-                    Add to Copper
-                </b>
-                <p class="text-muted">Completed <span class="date">Dec 16, 2019</span></p>
+                <a href="/todo/edit/{{$todo['id']}}" class="text-justify font-weight-bold">
+                    {{ $todo['title']}}
+                </a>
+                <p class="text-muted">{{ $todo['status'] ? 'Complated' : 'On-Progress' }} <span class="date">{{ \Carbon\Carbon::parse($todo['date'])->format('j F, Y') }}</span></p>
+                {{-- untuk membuat tanggal menjadi tulisan --}}
             </div>
             <div class="ml-auto">
-                <span class="fas fa-arrow-right btn"></span>
+                {{-- ketika akan memuat fitur delete, harus menggunakan form, kenapa? karena kalalu kita jalanin fitur delete itu kan artinya 
+                    mau ubah di database nya kan? kalau hal hal yang berhubungan dengan modifiikasi database harus menggunakan form --}}
+                <form action="{{ route('todo.delete', $todo['id']) }}" method="POST">
+                    @csrf
+                    {{-- menimpa attribute method="POST" pada form agar menjadi delete, karena di method routenya menggunakan delete --}}
+                    @method('DELETE')
+                    {{-- biar action form nya bisa dijalanin, buttonnya harus type submit --}}
+                    <button class="fas fa-trash text-danger btn"></button>
+                </form>
+                {{-- <span class="fas fa-arrow-right btn"></span> --}}
             </div>
         </div>
-        <div class="comment d-flex align-items-start justify-content-between">
-            <div class="mr-2">
-                <label class="option">
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-            <div class="d-flex flex-column w-75">
-                <b class="text-justify">
-                    Check on-boarding status
-                </b>
-                <p class="text-muted">Completed <span class="date">Dec 16, 2019</span></p>
-            </div>
-            <div class="ml-auto">
-                <span class="fas fa-arrow-right btn"></span>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
 @endsection

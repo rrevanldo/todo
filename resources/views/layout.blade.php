@@ -10,19 +10,16 @@
 </head>
 <body>
     @if (Auth::check())
-    <nav class="navbar navbar-expand-lg bg-white">
+    <nav class="navbar navbar-expand-lg" style="background: #94B49F">
         <a class="navbar-brand" href="#">TODO APP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto navbar-right-top">
+            <ul class="navbar-nav ml-auto navbar-right-top">    
                 <li class="nav-item dropdown nav-user">
-                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="https://img.icons8.com/dusk/100/000000/user-female-circle.png" alt="" class="rounded-circle" width="35"></a>
+                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">   <p class="mb-0 nav-user-name" style="color: #FFFDE3;">{{ Auth::user()->name }}</p></a>
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
-                        <div class="nav-user-info">
-                            <p class="mb-0 nav-user-name">{{ Auth::user()->name }}</p>
-                        </div>
                         <a class="dropdown-item" href="/logout">
                             <i class="fas fa-power-off mr-2"></i>Logout
                         </a>

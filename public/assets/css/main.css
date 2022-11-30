@@ -2,7 +2,8 @@
 
 body{
     background-color: #94B49F;
-    background-image: url(../img/1161810.jpg);
+    background-image: url(../img/WhatsApp\ Image\ 2022-11-28\ at\ 11.08.39.jpg);
+    background-size: cover;
     font-family: "Poppins", sans-serif;
     font-weight: 300;
 }
@@ -12,6 +13,7 @@ body{
     padding:10px;
     border:none;
     border-radius:20px;
+    background-color: #FFFDE3;
 }
 
 .logo i {
@@ -62,6 +64,7 @@ body{
     border-radius: 12px;
     margin: 30px auto;
     padding: 30px;
+    background-color: #FFFDE3;
 }
 .info.btn{
     padding-top: 0;
@@ -209,7 +212,7 @@ p.text-muted{
 }
   
 #create-form {
-    background: #F9F9F9;
+    background: #FFFDE3;
     padding: 25px;
     margin: 50px 0;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -314,7 +317,7 @@ fieldset {
     font-size: 20px;
     text-transform: uppercase;
     font-weight: 700;
-    color: #665A48;
+    color: #FFFDE3;
 }
 
 .navbar-right-top .nav-item {
@@ -370,4 +373,20 @@ fieldset {
 
 .nav-user-dropdown .dropdown-item:hover {
     background-color: #f7f7fb;
+}
+
+.logres{
+    color: #94B49F;
+}
+
+.go-button{
+    background-color: #94B49F;
+}
+
+.fa-user-circle:before{
+    color: #94B49F;
+}
+
+.fa-user-plus:before{
+    color: #94B49F;
 }
