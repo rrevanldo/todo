@@ -20,6 +20,17 @@
                 <li class="nav-item dropdown nav-user">
                     <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">   <p class="mb-0 nav-user-name" style="color: #FFFDE3;">{{ Auth::user()->name }}</p></a>
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                        @if (Auth::user()->role == 'admin')
+                        <a class="dropdown-item" href="{{route('todo.users')}}">
+                            <i class="fas fa-server mr-2"></i>Data User
+                        </a>
+                        @endif
+                        <a class="dropdown-item" href="{{route('todo.index')}}">
+                            <i class="fa fa-home mr-2"></i>Home
+                        </a>
+                        <a class="dropdown-item" href="{{route('todo.profile')}}">
+                            <i class="fas fa-regular fa-user mr-2"></i>Profile
+                        </a>
                         <a class="dropdown-item" href="/logout">
                             <i class="fas fa-power-off mr-2"></i>Logout
                         </a>
@@ -31,7 +42,9 @@
     @endif
     
     {{-- konten tambahan di berbagai halaman --}}
-    @yield('content')
+    <div class="container">
+        @yield('content')
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

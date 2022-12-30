@@ -17,14 +17,64 @@ class TodoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function login()
+     public function changeProfile (Request $request)
     {
-        return view('dashboard.login');
+        $request->validate([
+            'image_profile' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
+        ]);
+
+        $image = $request->file('image_profile');
+        $imgName = time().rand().'.'.$image->extension();
+        if(!file_exists(public_path('/assets/img/'.$image->getClientOriginalName()))){
+            $destinationPath = public_path('/assets/img/');
+            $image->move($destinationPath, $imgName);
+            $uploaded = $imgName;
+        }else{
+            $uploaded = $image->getClientOriginalName();
+        }
+
+        User::where('id', Auth::user()->id)->update([
+            'image_profile' => $uploaded
+        ]);
+
+        return redirect()->route('todo.profile')->with('successUploadImg', 'Foto Profile Berhasil diperbarui');
+    }
+
+    public function profileUpload()
+    {
+        return view('dashboard.upload-profile');
+    }
+
+    public function error()
+    {
+        return view('dashboard.error');
+    }
+
+    public function home()
+    {
+        return view('dashboard.index');
+    }
+
+    public function profile()
+    {
+        $users=User::where('id', Auth::user()->id)->first();
+        return view('dashboard.profile' , compact('users'));
+    }
+
+    public function users()
+    {
+        $users=User::all();
+        return view('dashboard.users' , compact('users'));
     }
 
     public function register()
     {
         return view('dashboard.register');
+    }
+
+    public function login()
+    {
+        return view('dashboard.login');
     }
 
     public function inputRegister(Request $request)
@@ -108,6 +158,8 @@ class TodoController extends Controller
         ]);
         return redirect()->route('todo.complated')->with('done', 'Todo Sudah dikerjakan!');
     }
+
+    
 
     public function create()
     {
