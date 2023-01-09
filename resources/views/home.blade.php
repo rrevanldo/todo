@@ -13,8 +13,8 @@
         </div>
     @endif
     <img src="{{ asset('img/list.svg') }}" alt="admin" width="300" class="d-block ml-auto mr-auto mt-5">
-    <p class="h5 mt-3 w-75 text-center d-block ml-auto mr-auto">Silahkan pilih di bagian atas ( breadcrumb ) untuk melihat daftar ToDo-mu, atau klik button dibawah untuk menambahkan ToDo</p>
-    <button type="button" class="btn btn-info d-block mr-auto ml-auto mt-3 btn-lg text-white" data-toggle="modal" data-target="#addTodo">Buat ToDo</button>
+    <p class="h5 mt-3 w-75 text-center d-block ml-auto mr-auto">Silahkan pilih di bagian atas ( breadcrumb ) untuk melihat daftar kegiatan-mu, atau klik tombol dibawah untuk menambahkan kegiatan</p>
+    <button type="button" class="btn btn-info d-block mr-auto ml-auto mt-3 btn-lg text-white" data-toggle="modal" data-target="#addTodo">Buat Kegiatan</button>
     @include('dashboard.add_modal')
 </div>
 @endsection

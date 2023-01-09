@@ -1,44 +1,46 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\ComplateController;
 
-Route::middleware('isGuest')->group(function () {
-    Route::get('/', [TodoController::class, 'login'])->name('login');
-    Route::get('/register', [TodoController::class, 'register'])->name('register');
-    Route::post('/register', [TodoController::class, 'inputRegister'])->name('register.post');
-    Route::post('/login', [TodoController::class, 'auth'])->name('login.auth');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
+// Route::get('/', function () {
+//     return view('index');
+// });
+
+Route::middleware(['guest', 'preventBackHistory'])->group(function () {
+    Route::get('/', function () {
+        return view('index');
+    });
+    Route::view('/login', 'index')->name('login');
+    Route::view('/register', 'index')->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/login/check', [AuthController::class, 'check'])->name('check');
 });
-
-//logout
-Route::get('/logout', [TodoController::class, 'logout'])->name('logout');
-
-// halaman admin
-Route::middleware('isLogin', 'CekRole:admin')->group(function() {
-    Route::get('/todo', [TodoController::class, 'index'])->name('todo.index');
-    Route::get('/todo/users', [TodoController::class, 'users'])->name('todo.users');
+Route::middleware(['auth', 'preventBackHistory'])->group(function () {
+    Route::view('/home', 'home')->name('home');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::view('/password', 'dashboard.password')->name('password');
+    Route::patch('/password/changed', [AuthController::class, 'changePassword'])->name('password.changed');
+    Route::post('/add/todo', [TodoController::class, 'store'])->name('newTodo');
+    Route::get('/todo/{user_id}', [TodoController::class, 'index'])->name('todo');
+    Route::get('/todo/edit/{id}', [TodoController::class, 'edit'])->name('todo.edit');
+    Route::patch('/todo/update/{id}', [TodoController::class, 'update'])->name('todo.update');
+    Route::delete('/todo/delete/{id}', [TodoController::class, 'destroy'])->name('todo.destroy');
+    Route::get('/todo/complated/{id}', [ComplateController::class, 'update'])->name('todo.complated');
+    Route::get('/todo/complate/{user_id}', [ComplateController::class, 'index'])->name('complated');
+    Route::get('/todo/undo/{id}', [ComplateController::class, 'undo'])->name('complated.undo');
+    Route::delete('/todo/complated/delete/{id}', [ComplateController::class, 'destroy'])->name('complated.destroy');
 });
-
-// halaman user dan admin
-Route::middleware(['isLogin', 'CekRole:admin,user'])->group(function() {
-    Route::get('/todo/', [TodoController::class, 'home'])->name('todo.index');
-    Route::get('/todo/profile', [TodoController::class, 'profile'])->name('todo.profile');
-    Route::get('/error', [TodoController::class, 'error'])->name('error');
-    Route::get('/todo/profile/upload', [TodoController::class, 'profileUpload'])->name('todo.profile.upload');
-    Route::patch('/todo/profile/change', [TodoController::class, 'changeProfile'])->name('todo.profile.change');
-});
-
-// halaman user
-Route::middleware('isLogin', 'CekRole:user')->prefix('/todo')->name('todo.')->group(function () {
-    Route::get('/', [TodoController::class, 'index'])->name('index');
-    Route::get('/complated', [TodoController::class, 'complated'])->name('complated');
-    Route::get('/create', [TodoController::class, 'create'])->name('create');
-    Route::post('/store', [TodoController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [TodoController::class, 'edit'])->name('edit');
-    Route::patch('/update/{id}', [TodoController::class, 'update'])->name('update');
-    Route::delete('/delete/{id}', [TodoController::class, 'destroy'])->name('delete');
-    Route::patch('/complated/{id}', [TodoController::class, 'updateComplated'])->name('update-complated');
-});
-
-Route::get('/todo', [TodoController::class, 'index'])->name('todo.index');
